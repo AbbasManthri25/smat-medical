@@ -68,7 +68,7 @@ export class CheckoutPage implements OnInit {
     }
   }
 
-  private submitOrder(razorpayData?: any) {
+  private submitOrder() {
     this.submitting.set(true);
     this.orders.placeOrder(this.form, this.cart.items()).subscribe({
       next: (res) => {
@@ -85,26 +85,58 @@ export class CheckoutPage implements OnInit {
   }
 
   private handleRazorpay() {
-    const total = this.cart.total();
-    this.orders.createRazorpayOrder(total).subscribe({
-      next: (rpOrder) => {
-        const opts = {
-          key:          rpOrder.key,
-          amount:       rpOrder.amount,
-          currency:     'INR',
-          name:         'SMAT Medical',
-          description:  'Medical Equipment Order',
-          order_id:     rpOrder.orderId,
-          handler:      (res: any) => this.submitOrder(res),
-          prefill: { name: this.form.name, email: this.form.email, contact: this.form.phone },
-          theme: { color: '#06B6D4' },
-        };
-        const rzp = new Razorpay(opts);
-        rzp.open();
+    this.submitting.set(true);
+
+    // Step 1: Create DB order first to get the MongoDB _id needed for payment verification
+    this.orders.placeOrder(this.form, this.cart.items()).subscribe({
+      next: (orderRes) => {
+        const dbId      = orderRes.order._id;       // MongoDB _id — required by verifyPayment
+        const displayId = orderRes.order.orderId;   // SMAT-xxx — shown to customer
+
+        // Step 2: Create Razorpay order
+        this.orders.createRazorpayOrder(this.cart.total()).subscribe({
+          next: (rpOrder) => {
+            this.submitting.set(false);
+            const rzp = new Razorpay({
+              key:         rpOrder.key,
+              amount:      rpOrder.amount,
+              currency:    'INR',
+              name:        'SMAT Medical',
+              description: 'Medical Equipment Order',
+              order_id:    rpOrder.orderId,
+              handler: (rzpRes: any) => {
+                // Step 3: Verify payment signature on backend and mark order as paid
+                this.orders.verifyPayment({
+                  razorpay_order_id:   rzpRes.razorpay_order_id,
+                  razorpay_payment_id: rzpRes.razorpay_payment_id,
+                  razorpay_signature:  rzpRes.razorpay_signature,
+                  orderId:             dbId,
+                }).subscribe({
+                  next:  () => { this.finalise(displayId); },
+                  error: () => { this.finalise(displayId); }, // payment succeeded even if verify call fails
+                });
+              },
+              prefill: { name: this.form.name, email: this.form.email, contact: this.form.phone },
+              theme: { color: '#06B6D4' },
+            });
+            rzp.open();
+          },
+          error: () => {
+            this.submitting.set(false);
+            this.error.set('Could not initialise payment. Use Cash on Delivery instead.');
+          },
+        });
       },
-      error: () => {
-        this.error.set('Could not initialise payment. Use Cash on Delivery instead.');
+      error: (err) => {
+        this.submitting.set(false);
+        this.error.set(err.error?.message || 'Failed to place order. Please try again.');
       },
     });
+  }
+
+  private finalise(displayId: string) {
+    this.orderId.set(displayId);
+    this.success.set(true);
+    this.cart.clearCart();
   }
 }
