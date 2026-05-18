@@ -1,0 +1,16 @@
+<section class="why section">
+  <div class="container">
+    <div class="tc fade-up" style="margin-bottom:44px">
+      <div class="badge"><i class="fas fa-trophy"></i> Why Choose Us</div>
+      <h2 class="section-title">Why SMAT Medical?</h2>
+      <p class="section-sub">Technical expertise combined with a wide product range and responsive, honest service.</p>
+    </div>
+    <div class="why-grid fade-up">
+      <div class="wcard" *ngFor="let c of cards">
+        <div class="wcard-ico"><i [class]="c.icon"></i></div>
+        <h3>{{ c.title }}</h3>
+        <p>{{ c.desc }}</p>
+      </div>
+    </div>
+  </div>
+</section>

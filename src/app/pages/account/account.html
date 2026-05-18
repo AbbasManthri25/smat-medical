@@ -1,0 +1,105 @@
+<div class="account-page">
+  <div class="page-header">
+    <div class="container">
+      <div class="account-hero">
+        <div class="avatar">{{ auth.user()?.name?.charAt(0) | uppercase }}</div>
+        <div>
+          <h1>{{ auth.user()?.name }}</h1>
+          <p>{{ auth.user()?.email }} · {{ auth.user()?.organization || 'Customer' }}</p>
+        </div>
+        <button class="btn btn-outline logout-btn" (click)="auth.logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container account-body">
+    <div class="account-tabs">
+      <button [class.active]="tab() === 'orders'" (click)="tab.set('orders')">
+        <i class="fas fa-receipt"></i> My Orders
+      </button>
+      <button [class.active]="tab() === 'profile'" (click)="tab.set('profile')">
+        <i class="fas fa-user-edit"></i> Profile
+      </button>
+    </div>
+
+    <!-- Orders Tab -->
+    <div *ngIf="tab() === 'orders'">
+      <div *ngIf="loading()" class="loading-msg"><i class="fas fa-spinner fa-spin"></i> Loading orders…</div>
+
+      <div *ngIf="!loading() && orders().length === 0" class="empty-orders">
+        <i class="fas fa-box-open"></i>
+        <p>No orders yet.</p>
+        <a routerLink="/products" class="btn btn-primary">Browse Products</a>
+      </div>
+
+      <div class="orders-list" *ngIf="!loading() && orders().length > 0">
+        <div class="order-card" *ngFor="let o of orders()">
+          <div class="order-head">
+            <div class="order-meta">
+              <span class="order-id">#{{ o.orderId }}</span>
+              <span class="order-date">{{ formatDate(o.createdAt) }}</span>
+            </div>
+            <span class="status-chip" [ngClass]="'chip-' + statusColor(o.orderStatus)">
+              {{ o.orderStatus | titlecase }}
+            </span>
+          </div>
+          <div class="order-items">
+            <span *ngFor="let item of o.items; let last = last">
+              {{ item.name }} (×{{ item.quantity }}){{ last ? '' : ', ' }}
+            </span>
+          </div>
+          <div class="order-foot">
+            <span class="order-total">₹{{ o.totalAmount.toLocaleString() }}</span>
+            <span class="pay-method">{{ o.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div *ngIf="tab() === 'profile'" class="profile-form">
+      <div class="form-section">
+        <div class="form-section-title">Personal Information</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" [(ngModel)]="profile.name" />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" [(ngModel)]="profile.phone" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" [(ngModel)]="profile.email" readonly />
+          </div>
+          <div class="form-group">
+            <label>Organization</label>
+            <input type="text" [(ngModel)]="profile.organization" />
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Delivery Address</div>
+        <div class="form-group">
+          <label>Address</label>
+          <textarea [(ngModel)]="profile.address" rows="2"></textarea>
+        </div>
+        <div class="form-row three">
+          <div class="form-group"><label>City</label><input type="text" [(ngModel)]="profile.city" /></div>
+          <div class="form-group"><label>State</label><input type="text" [(ngModel)]="profile.state" /></div>
+          <div class="form-group"><label>Pincode</label><input type="text" [(ngModel)]="profile.pincode" /></div>
+        </div>
+      </div>
+      <div class="error-msg" *ngIf="error()"><i class="fas fa-circle-exclamation"></i> {{ error() }}</div>
+      <button class="btn btn-primary save-btn" [class.saved]="saved()" (click)="saveProfile()">
+        <i [class]="saved() ? 'fas fa-check' : 'fas fa-save'"></i>
+        {{ saved() ? 'Saved!' : 'Save Changes' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<app-navbar></app-navbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>
+
+<!-- Floating WhatsApp -->
+<div class="wa-float">
+  <div class="wa-tip">Chat for Quick Quote</div>
+  <a href="https://wa.me/919876543210?text=Hi%20SMAT%20Medical%2C%20I%20need%20a%20product%20inquiry."
+     target="_blank" class="wa-float-btn">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</div>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" [class.show]="showScrollTop" (click)="scrollToTop()">
+  <i class="fas fa-arrow-up"></i>
+</button>

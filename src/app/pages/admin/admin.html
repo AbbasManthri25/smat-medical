@@ -1,0 +1,249 @@
+<div class="admin-page">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-logo">
+      <img src="/smat-logo.svg" alt="SMAT" style="width:32px;height:32px;" />
+      <span>SMAT Admin</span>
+    </div>
+    <nav class="admin-nav">
+      <button [class.active]="tab()==='dashboard'" (click)="switchTab('dashboard')">
+        <i class="fas fa-chart-line"></i> Dashboard
+      </button>
+      <button [class.active]="tab()==='orders'" (click)="switchTab('orders')">
+        <i class="fas fa-receipt"></i> Orders
+      </button>
+      <button [class.active]="tab()==='products'" (click)="switchTab('products')">
+        <i class="fas fa-boxes-stacked"></i> Products
+      </button>
+      <button [class.active]="tab()==='customers'" (click)="switchTab('customers')">
+        <i class="fas fa-users"></i> Customers
+      </button>
+      <button [class.active]="tab()==='inventory'" (click)="switchTab('inventory')">
+        <i class="fas fa-warehouse"></i> Inventory
+      </button>
+    </nav>
+    <div class="admin-user">
+      <div class="admin-avatar">{{ auth.user()?.name?.charAt(0) | uppercase }}</div>
+      <div>
+        <div class="admin-name">{{ auth.user()?.name }}</div>
+        <div class="admin-role">Administrator</div>
+      </div>
+    </div>
+    <div class="sidebar-links">
+      <a routerLink="/" class="sidebar-link"><i class="fas fa-home"></i> Visit Site</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <!-- Dashboard -->
+    <div *ngIf="tab()==='dashboard'">
+      <div class="admin-page-head">
+        <h1>Dashboard</h1>
+        <button class="btn-refresh" (click)="loadDashboard()"><i class="fas fa-rotate-right"></i> Refresh</button>
+      </div>
+      <div *ngIf="loading()" class="loading-msg"><i class="fas fa-spinner fa-spin"></i> Loading…</div>
+      <div class="stats-grid" *ngIf="!loading()">
+        <div class="stat-card blue">
+          <div class="stat-icon"><i class="fas fa-receipt"></i></div>
+          <div class="stat-info">
+            <div class="stat-num">{{ stats().totalOrders || 0 }}</div>
+            <div class="stat-lbl">Total Orders</div>
+          </div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon"><i class="fas fa-indian-rupee-sign"></i></div>
+          <div class="stat-info">
+            <div class="stat-num">₹{{ (stats().totalRevenue || 0).toLocaleString() }}</div>
+            <div class="stat-lbl">Total Revenue</div>
+          </div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
+          <div class="stat-info">
+            <div class="stat-num">{{ stats().totalProducts || 0 }}</div>
+            <div class="stat-lbl">Products</div>
+          </div>
+        </div>
+        <div class="stat-card cyan">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-info">
+            <div class="stat-num">{{ stats().totalCustomers || 0 }}</div>
+            <div class="stat-lbl">Customers</div>
+          </div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-icon"><i class="fas fa-clock"></i></div>
+          <div class="stat-info">
+            <div class="stat-num">{{ stats().pendingOrders || 0 }}</div>
+            <div class="stat-lbl">Pending Orders</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="recent-section" *ngIf="stats().recentOrders?.length">
+        <h3 class="section-head">Recent Orders</h3>
+        <table class="data-table">
+          <thead><tr><th>Order ID</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let o of stats().recentOrders">
+              <td class="cyan-text">#{{ o.orderId }}</td>
+              <td>{{ formatDate(o.createdAt) }}</td>
+              <td>₹{{ o.totalAmount?.toLocaleString() }}</td>
+              <td><span class="status-chip" [ngClass]="'chip-' + statusColor(o.orderStatus)">{{ o.orderStatus }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Orders -->
+    <div *ngIf="tab()==='orders'">
+      <div class="admin-page-head">
+        <h1>Orders</h1>
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input [(ngModel)]="orderSearch" (input)="loadOrders()" placeholder="Search Order ID…" />
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Order ID</th><th>Customer</th><th>Date</th><th>Amount</th><th>Payment</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let o of orders()">
+            <td class="cyan-text">#{{ o.orderId }}</td>
+            <td>{{ o.guestInfo?.name || o.user?.name || '—' }}<br><span class="sub-text">{{ o.guestInfo?.phone || o.user?.phone }}</span></td>
+            <td>{{ formatDate(o.createdAt) }}</td>
+            <td class="bold-text">₹{{ o.totalAmount?.toLocaleString() }}</td>
+            <td>{{ o.paymentMethod === 'cod' ? 'COD' : 'Online' }}</td>
+            <td><span class="status-chip" [ngClass]="'chip-' + statusColor(o.orderStatus)">{{ o.orderStatus }}</span></td>
+            <td>
+              <select class="status-select" [value]="o.orderStatus" (change)="updateStatus(o._id, $any($event.target).value)">
+                <option *ngFor="let s of STATUS_LIST" [value]="s">{{ s }}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="orders().length === 0" class="empty-msg">No orders found.</p>
+    </div>
+
+    <!-- Products -->
+    <div *ngIf="tab()==='products'">
+      <div class="admin-page-head">
+        <h1>Products</h1>
+        <div class="head-actions">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input [(ngModel)]="productSearch" (input)="loadProducts()" placeholder="Search products…" />
+          </div>
+          <button class="btn btn-primary" (click)="openNewProduct()"><i class="fas fa-plus"></i> Add Product</button>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let p of products()">
+            <td><div class="prod-name-cell"><i [class]="p.icon" style="color:var(--cyan);width:18px;text-align:center;"></i> {{ p.name }}</div></td>
+            <td class="cap-text">{{ p.category }}</td>
+            <td>₹{{ p.price?.toLocaleString() }}</td>
+            <td>{{ p.stock }}</td>
+            <td>
+              <span [class]="p.inStock ? 'badge-green' : 'badge-red'">{{ p.inStock ? 'In Stock' : 'Out of Stock' }}</span>
+            </td>
+            <td class="action-cell">
+              <button class="act-btn edit" (click)="openEditProduct(p)"><i class="fas fa-pen"></i></button>
+              <button class="act-btn delete" (click)="deleteProduct(p._id)"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="products().length === 0" class="empty-msg">No products found.</p>
+    </div>
+
+    <!-- Customers -->
+    <div *ngIf="tab()==='customers'">
+      <div class="admin-page-head">
+        <h1>Customers</h1>
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input [(ngModel)]="customerSearch" (input)="loadCustomers()" placeholder="Search by name or email…" />
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Organization</th><th>Joined</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let c of customers()">
+            <td><strong>{{ c.name }}</strong></td>
+            <td>{{ c.email }}</td>
+            <td>{{ c.phone }}</td>
+            <td>{{ c.organization || '—' }}</td>
+            <td>{{ formatDate(c.createdAt) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="customers().length === 0" class="empty-msg">No customers found.</p>
+    </div>
+
+    <!-- Inventory -->
+    <div *ngIf="tab()==='inventory'">
+      <div class="admin-page-head"><h1>Low Stock Alert</h1></div>
+      <div class="inventory-cards">
+        <div class="inv-card" *ngFor="let p of inventory()">
+          <i [class]="p.icon" class="inv-icon"></i>
+          <div class="inv-info">
+            <div class="inv-name">{{ p.name }}</div>
+            <div class="inv-cat">{{ p.category | titlecase }}</div>
+          </div>
+          <div class="inv-stock" [class.critical]="p.stock <= 3">{{ p.stock }} left</div>
+        </div>
+        <p *ngIf="inventory().length === 0" class="empty-msg">All products are well-stocked.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Product Modal -->
+<div class="modal-overlay" *ngIf="showModal()" (click)="closeModal()"></div>
+<div class="modal" *ngIf="showModal()">
+  <div class="modal-head">
+    <h3>{{ editProduct() ? 'Edit Product' : 'Add New Product' }}</h3>
+    <button class="modal-close" (click)="closeModal()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-row">
+      <div class="form-group"><label>Product Name *</label><input [(ngModel)]="productForm().name" /></div>
+      <div class="form-group"><label>Brand</label><input [(ngModel)]="productForm().brand" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category *</label>
+        <select [(ngModel)]="productForm().category">
+          <option *ngFor="let c of CATEGORIES" [value]="c">{{ c | titlecase }}</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Subcategory *</label><input [(ngModel)]="productForm().subcategory" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Price (₹) *</label><input type="number" [(ngModel)]="productForm().price" /></div>
+      <div class="form-group"><label>Original Price (₹)</label><input type="number" [(ngModel)]="productForm().originalPrice" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Stock</label><input type="number" [(ngModel)]="productForm().stock" /></div>
+      <div class="form-group"><label>Icon Class</label><input [(ngModel)]="productForm().icon" placeholder="fas fa-box" /></div>
+    </div>
+    <div class="form-group"><label>Short Description</label><input [(ngModel)]="productForm().shortDesc" /></div>
+    <div class="form-group"><label>Full Description *</label><textarea [(ngModel)]="productForm().description" rows="3"></textarea></div>
+    <div class="form-row">
+      <label class="check-label"><input type="checkbox" [(ngModel)]="productForm().inStock" /> In Stock</label>
+      <label class="check-label"><input type="checkbox" [(ngModel)]="productForm().featured" /> Featured</label>
+    </div>
+    <div class="error-msg" *ngIf="saveError()"><i class="fas fa-circle-exclamation"></i> {{ saveError() }}</div>
+  </div>
+  <div class="modal-foot">
+    <button class="btn btn-outline" (click)="closeModal()">Cancel</button>
+    <button class="btn btn-primary" (click)="saveProduct()" [disabled]="saving()">
+      <span *ngIf="!saving()"><i class="fas fa-save"></i> {{ editProduct() ? 'Update' : 'Create' }}</span>
+      <span *ngIf="saving()"><i class="fas fa-spinner fa-spin"></i> Saving…</span>
+    </button>
+  </div>
+</div>

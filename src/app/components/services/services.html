@@ -1,0 +1,57 @@
+<section class="services section" id="services">
+  <div class="container">
+    <div class="tc fade-up" style="margin-bottom:44px">
+      <div class="badge"><i class="fas fa-cogs"></i> Services</div>
+      <h2 class="section-title">What We Offer</h2>
+      <p class="section-sub">Beyond supply — complete support with maintenance contracts, service visits, and technical assistance.</p>
+    </div>
+
+    <div class="svc-grid fade-up">
+      <div class="scard" *ngFor="let s of services">
+        <div class="scard-ico"><i [class]="s.icon"></i></div>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.desc }}</p>
+        <ul class="slist">
+          <li *ngFor="let item of s.items"><i class="fas fa-check-circle"></i> {{ item }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AMC / CMC -->
+    <div class="fade-up">
+      <div class="tc" style="margin-bottom:30px">
+        <div class="badge"><i class="fas fa-file-contract"></i> Maintenance Contracts</div>
+        <h2 class="section-title">AMC &amp; CMC Support</h2>
+        <p class="section-sub">Keep your medical equipment running reliably with our Annual and Comprehensive Maintenance Contracts.</p>
+      </div>
+      <div class="contract-grid">
+        <div class="ccard amc">
+          <div class="cbadge">AMC</div>
+          <h3>Annual Maintenance Contract</h3>
+          <p>Preventive maintenance and periodic care for your medical equipment.</p>
+          <ul class="cfeat">
+            <li *ngFor="let f of amcFeatures" [class.no]="!f.check">
+              <i [class]="f.check ? 'fas fa-check-circle' : 'fas fa-times-circle'"></i> {{ f.text }}
+            </li>
+          </ul>
+          <button class="contract-cta" (click)="requestAMC()">
+            <i class="fas fa-file-signature"></i> Get AMC Quote
+          </button>
+        </div>
+        <div class="ccard cmc">
+          <div class="cbadge">CMC — Premium</div>
+          <h3>Comprehensive Maintenance Contract</h3>
+          <p>Complete coverage — services, spare parts, repairs and replacements all included.</p>
+          <ul class="cfeat">
+            <li *ngFor="let f of cmcFeatures">
+              <i class="fas fa-check-circle"></i> {{ f }}
+            </li>
+          </ul>
+          <button class="contract-cta cmc-cta" (click)="requestCMC()">
+            <i class="fas fa-file-signature"></i> Get CMC Quote
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-shield-heart"></i> Biomedical Engineering · Tamil Nadu
+      </div>
+      <h1 class="hero-title">
+        <span class="grad-text">SMAT Medical</span><br>&amp; Dental Solutions
+      </h1>
+      <div class="hero-cycle-wrap">
+        <span class="hero-cycle-label">Supplying&nbsp;</span>
+        <span class="hero-cycle" #cycleEl>Medical Equipment<span class="cursor">|</span></span>
+      </div>
+      <p class="hero-desc">
+        Your trusted partner for hospital medical equipment and dental clinic supplies.
+        From consumables to advanced ICU and imaging systems — quality with reliable after-sales support.
+      </p>
+      <div class="hero-btns">
+        <a href="#products" class="btn btn-primary"><i class="fas fa-th-large"></i> Explore Products</a>
+        <a href="#contact" class="btn btn-outline"><i class="fas fa-file-invoice"></i> Get a Quote</a>
+      </div>
+      <div class="hero-stats">
+        <div *ngFor="let stat of stats; let last = last" class="hstat">
+          <div class="hstat-num">{{ stat.num }}</div>
+          <div class="hstat-lbl">{{ stat.lbl }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-ecg-wrap">
+        <div class="ecg-label">Live ECG · Patient Vitals</div>
+        <div class="ecg-track">
+          <svg class="ecg-svg" viewBox="0 0 800 56" preserveAspectRatio="none">
+            <path class="ecg-path" d="
+              M0,28 L40,28 L55,8 L70,48 L85,28 L110,28
+              L125,28 L130,20 L135,28 L140,28
+              L160,28 L175,8 L190,48 L205,28 L230,28
+              L245,28 L250,20 L255,28 L260,28
+              L280,28 L295,8 L310,48 L325,28 L350,28
+              L365,28 L370,20 L375,28 L380,28
+              M400,28 L440,28 L455,8 L470,48 L485,28 L510,28
+              L525,28 L530,20 L535,28 L540,28
+              L560,28 L575,8 L590,48 L605,28 L630,28
+              L645,28 L650,20 L655,28 L660,28
+              L680,28 L695,8 L710,48 L725,28 L750,28
+              L765,28 L770,20 L775,28 L800,28
+            "/>
+          </svg>
+        </div>
+        <div class="hero-cards-mini">
+          <div class="hcard-mini" *ngFor="let c of cards">
+            <div class="hcm-ico">{{ c.ico }}</div>
+            <div>
+              <div class="hcm-name">{{ c.name }}</div>
+              <div class="hcm-sub">{{ c.desc }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

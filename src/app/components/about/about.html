@@ -1,0 +1,47 @@
+<section class="about section" id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="fade-up">
+        <div class="about-maincard">
+          <div class="about-icons">
+            <div class="about-ico"><i class="fas fa-stethoscope"></i></div>
+            <div class="about-ico"><i class="fas fa-tooth"></i></div>
+            <div class="about-ico"><i class="fas fa-microscope"></i></div>
+          </div>
+          <div class="about-card-title">Biomedical Engineering Background</div>
+          <div class="about-card-text">
+            Founded by a qualified Biomedical Engineer, SMAT Medical &amp; Dental Solutions brings
+            deep technical expertise and hands-on product knowledge to every supply and service we offer.
+            We understand equipment — not just sell it.
+          </div>
+        </div>
+        <div class="about-floats">
+          <div class="afloat" *ngFor="let s of stats">
+            <div class="num">{{ s.num }}</div>
+            <div class="lbl">{{ s.lbl }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <div class="badge"><i class="fas fa-info-circle"></i> About Us</div>
+        <h2 class="section-title">Trusted Medical &amp;<br>Dental Equipment Partner</h2>
+        <p class="section-sub">
+          SMAT Medical &amp; Dental Solutions is a startup medical equipment supply company
+          serving hospitals, dental clinics, diagnostic centers, and healthcare facilities across Tamil Nadu.
+        </p>
+        <div class="about-feats">
+          <div class="afeat" *ngFor="let f of features">
+            <div class="afeat-ico"><i [class]="f.icon"></i></div>
+            <div>
+              <h4>{{ f.title }}</h4>
+              <p>{{ f.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

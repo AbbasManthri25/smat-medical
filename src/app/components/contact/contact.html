@@ -1,0 +1,139 @@
+<section class="contact section" id="contact">
+  <div class="container">
+    <div class="tc fade-up" style="margin-bottom:44px">
+      <div class="badge"><i class="fas fa-envelope"></i> Contact Us</div>
+      <h2 class="section-title">Place an Order or Inquiry</h2>
+      <p class="section-sub">Send us your requirement and we'll respond with pricing, availability, and delivery details within 24 hours.</p>
+    </div>
+
+    <div class="contact-grid fade-up">
+
+      <!-- Left: contact info -->
+      <div class="contact-info">
+        <h3>Let's Talk Equipment</h3>
+        <p>Whether you need a single product or a complete hospital setup — share your requirement and get a fast quote.</p>
+
+        <div class="cmethods">
+          <div class="cmethod" *ngFor="let m of methods">
+            <div class="cmethod-ico" [ngClass]="m.cls"><i [class]="m.icon"></i></div>
+            <div>
+              <div class="cmethod-lbl">{{ m.label }}</div>
+              <a [href]="m.href" [target]="m.target || '_self'" class="cmethod-val">{{ m.value }}</a>
+            </div>
+          </div>
+        </div>
+
+        <a [href]="waLink" target="_blank" class="wa-cta">
+          <i class="fab fa-whatsapp" style="font-size:22px"></i>
+          Chat on WhatsApp — Quick Quote
+        </a>
+
+        <div class="info-note">
+          <i class="fas fa-shield-check"></i>
+          <span>All inquiries are confidential. We never share your contact details.</span>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="iform">
+
+        <!-- ✅ Success state -->
+        <div class="form-success" *ngIf="submitted">
+          <div class="success-ico"><i class="fas fa-check-circle"></i></div>
+          <h3>Inquiry Sent Successfully!</h3>
+          <p>Thank you! We've received your inquiry and will contact you within <strong>24 hours</strong> with pricing and availability.</p>
+          <div class="success-actions">
+            <button class="btn btn-outline" (click)="resetForm()">
+              <i class="fas fa-plus"></i> Send Another Inquiry
+            </button>
+            <a [href]="waLink" target="_blank" class="btn btn-wa">
+              <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- 📋 Form state -->
+        <ng-container *ngIf="!submitted">
+          <div class="iform-title">Send an Order / Inquiry</div>
+          <div class="iform-sub">All fields marked <span class="req">*</span> are required.</div>
+
+          <!-- ❌ Error alert -->
+          <div class="form-error" *ngIf="hasError">
+            <div class="form-error-top">
+              <i class="fas fa-triangle-exclamation"></i>
+              <span>Submission failed. Click below to send your order directly via your email app — all details will be pre-filled.</span>
+            </div>
+            <button type="button" class="mail-fallback-btn" (click)="sendViaMailApp()">
+              <i class="fas fa-envelope"></i> Send via Email App
+            </button>
+          </div>
+
+          <form (ngSubmit)="submitForm()" #orderForm="ngForm">
+            <div class="form-row">
+              <div class="fgroup">
+                <label>Your Name <span class="req">*</span></label>
+                <input type="text" placeholder="Dr. / Mr. / Ms. Full Name"
+                       required [(ngModel)]="form.name" name="name">
+              </div>
+              <div class="fgroup">
+                <label>Phone Number <span class="req">*</span></label>
+                <input type="tel" placeholder="+91 XXXXX XXXXX"
+                       required [(ngModel)]="form.phone" name="phone">
+              </div>
+            </div>
+
+            <div class="fgroup">
+              <label>Email Address</label>
+              <input type="email" placeholder="your@email.com"
+                     [(ngModel)]="form.email" name="email">
+            </div>
+
+            <div class="form-row">
+              <div class="fgroup">
+                <label>Organization / Hospital</label>
+                <input type="text" placeholder="Hospital / Clinic / Lab Name"
+                       [(ngModel)]="form.organization" name="organization">
+              </div>
+              <div class="fgroup">
+                <label>Product Category</label>
+                <select [(ngModel)]="form.category" name="category">
+                  <option value="">Select Category</option>
+                  <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="fgroup">
+              <label>Product / Equipment Required</label>
+              <div class="product-tag" *ngIf="form.product">
+                <i class="fas fa-tag"></i> {{ form.product }}
+                <button type="button" class="tag-clear" (click)="form.product=''">×</button>
+              </div>
+              <input type="text" placeholder="e.g. Patient Monitor, Dental Chair, ECG Machine…"
+                     [(ngModel)]="form.product" name="product">
+            </div>
+
+            <div class="fgroup">
+              <label>Details, Quantity &amp; Budget</label>
+              <textarea placeholder="Describe your requirement — quantity needed, preferred brand, budget range, delivery location…"
+                        [(ngModel)]="form.message" name="message"></textarea>
+            </div>
+
+            <button type="submit" class="fsubmit" [disabled]="submitting">
+              <ng-container *ngIf="!submitting">
+                <i class="fas fa-paper-plane"></i> Send Order / Inquiry
+              </ng-container>
+              <ng-container *ngIf="submitting">
+                <i class="fas fa-circle-notch fa-spin"></i> Sending…
+              </ng-container>
+            </button>
+
+            <p class="form-note">
+              <i class="fas fa-clock"></i> We typically respond within 2–4 business hours.
+            </p>
+          </form>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>

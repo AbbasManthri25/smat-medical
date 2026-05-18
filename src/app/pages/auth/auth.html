@@ -1,0 +1,100 @@
+<div class="auth-page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <!-- Logo -->
+      <div class="auth-logo">
+        <img src="/smat-logo.svg" alt="SMAT Medical" class="logo-img" />
+        <div class="logo-text">
+          <div class="logo-name">SMAT Medical</div>
+          <div class="logo-tag">Medical &amp; Dental Solutions</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button [class.active]="isLogin()" (click)="switchTab(true)">Sign In</button>
+        <button [class.active]="!isLogin()" (click)="switchTab(false)">Register</button>
+      </div>
+
+      <!-- Login -->
+      <form *ngIf="isLogin()" (ngSubmit)="login()" class="auth-form">
+        <div class="form-group">
+          <label>Email Address</label>
+          <div class="input-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" [(ngModel)]="loginForm.email" name="email" placeholder="your@email.com" autocomplete="email" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrap">
+            <i class="fas fa-lock"></i>
+            <input [type]="showPass() ? 'text' : 'password'" [(ngModel)]="loginForm.password" name="password" placeholder="••••••••" autocomplete="current-password" />
+            <button type="button" class="pass-toggle" (click)="showPass.set(!showPass())">
+              <i [class]="showPass() ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        <div class="error-msg" *ngIf="error()"><i class="fas fa-circle-exclamation"></i> {{ error() }}</div>
+        <button type="submit" class="btn btn-primary submit-btn" [disabled]="loading()">
+          <span *ngIf="!loading()"><i class="fas fa-sign-in-alt"></i> Sign In</span>
+          <span *ngIf="loading()"><i class="fas fa-spinner fa-spin"></i> Signing in…</span>
+        </button>
+      </form>
+
+      <!-- Register -->
+      <form *ngIf="!isLogin()" (ngSubmit)="register()" class="auth-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name <span class="req">*</span></label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" [(ngModel)]="regForm.name" name="name" placeholder="Dr. Full Name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone <span class="req">*</span></label>
+            <div class="input-wrap">
+              <i class="fas fa-phone"></i>
+              <input type="tel" [(ngModel)]="regForm.phone" name="phone" placeholder="+91 XXXXX XXXXX" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address <span class="req">*</span></label>
+          <div class="input-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" [(ngModel)]="regForm.email" name="email" placeholder="your@email.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Hospital / Organization</label>
+          <div class="input-wrap">
+            <i class="fas fa-hospital"></i>
+            <input type="text" [(ngModel)]="regForm.organization" name="org" placeholder="Hospital / Clinic name (optional)" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Password <span class="req">*</span></label>
+          <div class="input-wrap">
+            <i class="fas fa-lock"></i>
+            <input [type]="showPass() ? 'text' : 'password'" [(ngModel)]="regForm.password" name="password" placeholder="Min. 6 characters" />
+            <button type="button" class="pass-toggle" (click)="showPass.set(!showPass())">
+              <i [class]="showPass() ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+          </div>
+        </div>
+        <div class="error-msg" *ngIf="error()"><i class="fas fa-circle-exclamation"></i> {{ error() }}</div>
+        <button type="submit" class="btn btn-primary submit-btn" [disabled]="loading()">
+          <span *ngIf="!loading()"><i class="fas fa-user-plus"></i> Create Account</span>
+          <span *ngIf="loading()"><i class="fas fa-spinner fa-spin"></i> Creating account…</span>
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        <ng-container *ngIf="isLogin()">Don't have an account? <button class="link-btn" (click)="switchTab(false)">Register free</button></ng-container>
+        <ng-container *ngIf="!isLogin()">Already have an account? <button class="link-btn" (click)="switchTab(true)">Sign in</button></ng-container>
+      </p>
+    </div>
+  </div>
+</div>

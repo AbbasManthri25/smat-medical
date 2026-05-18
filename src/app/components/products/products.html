@@ -1,0 +1,57 @@
+<section class="products section" id="products">
+  <div class="container">
+    <div class="tc fade-up" style="margin-bottom:36px">
+      <div class="badge"><i class="fas fa-th-large"></i> Product Catalog</div>
+      <h2 class="section-title">Medical &amp; Dental Products</h2>
+      <p class="section-sub">Comprehensive range — small consumables to high-end imaging systems, all available on order.</p>
+    </div>
+
+    <div class="prod-tabs">
+      <button class="tab-btn" [class.active]="activeTab==='med'" (click)="activeTab='med'">
+        <i class="fas fa-hospital"></i> Medical Products
+      </button>
+      <button class="tab-btn" [class.active]="activeTab==='den'" (click)="activeTab='den'">
+        <i class="fas fa-tooth"></i> Dental Products
+      </button>
+      <button class="tab-btn" [class.active]="activeTab==='lab'" (click)="activeTab='lab'">
+        <i class="fas fa-flask"></i> Lab Products
+      </button>
+    </div>
+
+    <ng-container *ngFor="let tab of tabs">
+      <div *ngIf="activeTab === tab.id">
+        <div class="cat-block fade-up" *ngFor="let cat of tab.categories">
+          <div class="cat-head">
+            <div class="cat-ico" [ngClass]="cat.iconColor"><i [class]="cat.icon"></i></div>
+            <h3>{{ cat.title }}</h3>
+            <span class="cat-count">{{ cat.products.length }} Products</span>
+          </div>
+          <div class="prod-grid">
+            <div class="pcard" *ngFor="let p of cat.products">
+              <div class="pcard-ico"><i [class]="p.icon"></i></div>
+              <h4>{{ p.name }}</h4>
+              <p>{{ p.desc }}</p>
+              <button class="pcard-cta" (click)="requestQuote(p.name, cat.title)">
+                <i class="fas fa-file-invoice"></i> Request Quote
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="tc" style="margin-top:44px">
+      <p style="color:rgba(255,255,255,.4);font-size:14px;margin-bottom:18px">
+        Don't see what you need? We source from 40+ brands — just ask.
+      </p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" (click)="requestQuote('Custom Requirement')">
+          <i class="fas fa-file-invoice"></i> Request Custom Quote
+        </button>
+        <a href="https://wa.me/919876543210?text=Hi%20SMAT%20Medical%2C%20I%20need%20a%20product%20inquiry." target="_blank" class="btn btn-outline">
+          <i class="fab fa-whatsapp"></i> WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

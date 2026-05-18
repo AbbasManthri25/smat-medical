@@ -1,0 +1,22 @@
+<section class="brands section" id="brands">
+  <div class="container">
+    <div class="tc fade-up" style="margin-bottom:44px">
+      <div class="badge"><i class="fas fa-award"></i> Authorized Brands</div>
+      <h2 class="section-title">Brands We Supply</h2>
+      <p class="section-sub">Globally recognized and India's most trusted medical &amp; dental equipment brands.</p>
+    </div>
+
+    <div class="brands-seg fade-up" *ngFor="let seg of segments">
+      <div class="brands-seg-title">
+        <i [class]="seg.icon"></i> {{ seg.title }}
+      </div>
+      <div class="brands-grid">
+        <div class="bcard" *ngFor="let b of seg.brands">
+          <div class="blogo">{{ b.abbr }}</div>
+          <div class="bname">{{ b.name }}</div>
+          <div class="bcat">{{ b.cat }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

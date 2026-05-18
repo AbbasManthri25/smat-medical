@@ -1,0 +1,15 @@
+<section class="sectors section">
+  <div class="container">
+    <div class="tc fade-up" style="margin-bottom:36px">
+      <div class="badge"><i class="fas fa-building-circle-check"></i> Sectors We Serve</div>
+      <h2 class="section-title">Who We Supply To</h2>
+      <p class="section-sub">Serving a wide range of healthcare providers — from multi-specialty hospitals to single-chair dental clinics.</p>
+    </div>
+    <div class="sec-grid fade-up">
+      <div class="sector-card" *ngFor="let s of sectors">
+        <div class="sec-ico">{{ s.ico }}</div>
+        <h4>{{ s.name }}</h4>
+      </div>
+    </div>
+  </div>
+</section>

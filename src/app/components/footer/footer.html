@@ -1,0 +1,36 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="flogo">
+          <img src="smat-logo.svg" class="flogo-img" alt="SMAT Medical Logo">
+          <div>
+            <div class="flogo-name">SMAT Medical &amp; Dental Solutions</div>
+            <div class="flogo-tag">Complete Medical &amp; Dental Equipment Solutions</div>
+          </div>
+        </div>
+        <p class="fdesc">A Biomedical Engineer-led startup supplying medical and dental equipment to hospitals, clinics, and diagnostic centers. From consumables to advanced imaging — we've got it covered.</p>
+        <div class="fsocials">
+          <a href="#" class="fsoc"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="fsoc"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="fsoc"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://wa.me/919876543210" target="_blank" class="fsoc"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="fcol" *ngFor="let col of columns">
+        <h4>{{ col.title }}</h4>
+        <ul class="flinks">
+          <li *ngFor="let link of col.links">
+            <a [href]="link.href">{{ link.label }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 SMAT Medical &amp; Dental Solutions. All rights reserved.</p>
+      <p class="footer-grad">Healthcare Excellence · Tamil Nadu</p>
+    </div>
+  </div>
+</footer>

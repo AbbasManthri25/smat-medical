@@ -1,0 +1,11 @@
+.sectors { background: var(--bg2); }
+.sec-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 18px; }
+.sector-card {
+  background: var(--glass); border: 1px solid var(--bdr2);
+  border-radius: var(--rl); padding: 32px 18px; text-align: center;
+  transition: var(--tr); backdrop-filter: blur(14px);
+  &:hover { border-color: var(--bdr); transform: translateY(-5px); box-shadow: var(--sh); }
+  h4 { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); margin-top: 4px; }
+}
+.sec-ico { font-size: 38px; margin-bottom: 10px; }
+@media (max-width: 480px) { .sec-grid { grid-template-columns: 1fr 1fr; } }

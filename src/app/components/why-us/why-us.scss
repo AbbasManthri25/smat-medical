@@ -1,0 +1,17 @@
+.why { background: var(--bg); }
+.why-grid  { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 22px; }
+.wcard {
+  padding: 30px; background: var(--glass);
+  border: 1px solid var(--bdr2); border-radius: var(--rl); transition: var(--tr);
+  backdrop-filter: blur(16px);
+  &:hover { background: var(--glass2); border-color: var(--bdr); box-shadow: var(--sh); transform: translateY(-4px); }
+  h3 { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 8px; }
+  p  { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.65; }
+}
+.wcard-ico {
+  width: 52px; height: 52px;
+  background: rgba(6,182,212,.1); border: 1px solid rgba(6,182,212,.2);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--cyan2); margin-bottom: 16px;
+}

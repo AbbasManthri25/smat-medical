@@ -1,0 +1,81 @@
+<div class="cart-page">
+  <div class="page-header">
+    <div class="container">
+      <h1 class="section-title">Shopping Cart</h1>
+      <p class="section-sub" *ngIf="!cart.isEmpty()">{{ cart.count() }} item(s) · Total ₹{{ cart.total().toLocaleString() }}</p>
+    </div>
+  </div>
+
+  <div class="container cart-body">
+    <!-- Empty -->
+    <div *ngIf="cart.isEmpty()" class="empty-cart">
+      <i class="fas fa-shopping-cart"></i>
+      <h2>Your cart is empty</h2>
+      <p>Add medical or dental products to get started.</p>
+      <a routerLink="/products" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Browse Products</a>
+    </div>
+
+    <!-- Items -->
+    <ng-container *ngIf="!cart.isEmpty()">
+      <div class="cart-layout">
+        <!-- Items List -->
+        <div class="cart-items">
+          <div class="cart-item" *ngFor="let item of cart.items()">
+            <div class="item-icon">
+              <i [class]="item.icon || 'fas fa-box'"></i>
+            </div>
+            <div class="item-info">
+              <h3 class="item-name">{{ item.name }}</h3>
+              <span class="item-cat">{{ item.category | titlecase }}</span>
+              <div class="item-price-row">
+                <span class="item-price">₹{{ item.price.toLocaleString() }}</span>
+                <span class="item-unit">per unit</span>
+              </div>
+            </div>
+            <div class="item-qty">
+              <button (click)="cart.updateQuantity(item.productId, item.quantity - 1)">
+                <i class="fas fa-minus"></i>
+              </button>
+              <input type="number" [value]="item.quantity" min="1" (change)="updateQty(item.productId, $event)" />
+              <button (click)="cart.updateQuantity(item.productId, item.quantity + 1)">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="item-subtotal">
+              ₹{{ (item.price * item.quantity).toLocaleString() }}
+            </div>
+            <button class="item-remove" (click)="cart.removeItem(item.productId)" title="Remove">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="cart-summary">
+          <div class="summary-card">
+            <h3 class="summary-title">Order Summary</h3>
+            <div class="summary-row" *ngFor="let item of cart.items()">
+              <span>{{ item.name }} × {{ item.quantity }}</span>
+              <span>₹{{ (item.price * item.quantity).toLocaleString() }}</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row total-row">
+              <span>Total Amount</span>
+              <span class="total-val">₹{{ cart.total().toLocaleString() }}</span>
+            </div>
+            <p class="gst-note"><i class="fas fa-info-circle"></i> GST & shipping calculated at checkout</p>
+            <a routerLink="/checkout" class="btn btn-primary checkout-btn">
+              <i class="fas fa-lock"></i> Proceed to Checkout
+            </a>
+            <a routerLink="/products" class="btn btn-outline continue-btn">
+              <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+            <button class="clear-btn" (click)="cart.clearCart()">
+              <i class="fas fa-trash"></i> Clear Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

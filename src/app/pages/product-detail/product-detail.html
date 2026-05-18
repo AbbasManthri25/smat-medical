@@ -1,0 +1,104 @@
+<div class="detail-page">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-bar">
+    <div class="container">
+      <a routerLink="/">Home</a>
+      <i class="fas fa-chevron-right"></i>
+      <a routerLink="/products">Products</a>
+      <i class="fas fa-chevron-right"></i>
+      <span>{{ product()?.name || 'Loading…' }}</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading()" class="detail-skeleton container">
+    <div class="skel-img"></div>
+    <div class="skel-info">
+      <div class="skel-line wide"></div>
+      <div class="skel-line medium"></div>
+      <div class="skel-line narrow"></div>
+    </div>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading() && error()" class="error-state container">
+    <i class="fas fa-triangle-exclamation"></i>
+    <p>{{ error() }}</p>
+    <a routerLink="/products" class="btn btn-primary">Back to Products</a>
+  </div>
+
+  <!-- Product Detail -->
+  <div *ngIf="!loading() && product() as p" class="container detail-grid">
+    <!-- Left: Visual -->
+    <div class="detail-visual">
+      <div class="product-icon-box" [ngClass]="'icon-' + (p.iconColor || 'blue')">
+        <i [class]="p.icon"></i>
+      </div>
+      <div class="product-badges">
+        <span class="badge" *ngIf="p.featured"><i class="fas fa-star"></i> Featured</span>
+        <span class="cat-badge">{{ p.category | titlecase }}</span>
+        <span class="sku-badge">SKU: {{ p.sku }}</span>
+      </div>
+      <div class="trust-strip">
+        <div class="trust-item"><i class="fas fa-shield-check"></i> ISO Certified</div>
+        <div class="trust-item"><i class="fas fa-truck"></i> Pan India Delivery</div>
+        <div class="trust-item"><i class="fas fa-wrench"></i> After-Sales Support</div>
+      </div>
+    </div>
+
+    <!-- Right: Info -->
+    <div class="detail-info">
+      <div class="sub-cat">{{ p.subcategory }}</div>
+      <h1 class="prod-title">{{ p.name }}</h1>
+      <div class="brand-row"><i class="fas fa-tag"></i> Brand: <strong>{{ p.brand }}</strong></div>
+
+      <div class="price-block">
+        <span class="price-main">₹{{ p.price.toLocaleString() }}</span>
+        <ng-container *ngIf="p.originalPrice">
+          <span class="price-orig">₹{{ p.originalPrice.toLocaleString() }}</span>
+          <span class="discount-chip" *ngIf="discount() > 0">{{ discount() }}% OFF</span>
+        </ng-container>
+      </div>
+
+      <div class="stock-row" [class.in-stock]="p.inStock" [class.out-stock]="!p.inStock">
+        <i [class]="p.inStock ? 'fas fa-circle-check' : 'fas fa-circle-xmark'"></i>
+        {{ p.inStock ? 'In Stock' : 'Out of Stock' }}
+        <span class="stock-num" *ngIf="p.inStock && p.stock"> ({{ p.stock }} available)</span>
+      </div>
+
+      <p class="prod-desc">{{ p.description }}</p>
+
+      <!-- Specifications -->
+      <div class="specs-block" *ngIf="p.specifications?.length">
+        <div class="specs-title">Specifications</div>
+        <table class="specs-table">
+          <tr *ngFor="let s of p.specifications">
+            <td class="spec-key">{{ s.key }}</td>
+            <td class="spec-val">{{ s.value }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Add to Cart -->
+      <div class="cart-row" *ngIf="p.inStock">
+        <div class="qty-ctrl">
+          <button (click)="setQty(quantity() - 1)"><i class="fas fa-minus"></i></button>
+          <span>{{ quantity() }}</span>
+          <button (click)="setQty(quantity() + 1)"><i class="fas fa-plus"></i></button>
+        </div>
+        <button class="btn btn-primary add-btn" [class.added]="added()" (click)="addToCart()">
+          <i [class]="added() ? 'fas fa-check' : 'fas fa-cart-plus'"></i>
+          {{ added() ? 'Added to Cart!' : 'Add to Cart' }}
+        </button>
+      </div>
+
+      <div class="action-btns">
+        <a routerLink="/cart" class="btn btn-outline"><i class="fas fa-shopping-cart"></i> View Cart</a>
+        <a [href]="'https://wa.me/919876543210?text=Hi, I want to order: ' + p.name"
+           target="_blank" class="btn btn-wa">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
