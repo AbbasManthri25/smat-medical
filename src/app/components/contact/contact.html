@@ -57,15 +57,10 @@
           <div class="iform-title">Send an Order / Inquiry</div>
           <div class="iform-sub">All fields marked <span class="req">*</span> are required.</div>
 
-          <!-- ❌ Error alert -->
-          <div class="form-error" *ngIf="hasError">
-            <div class="form-error-top">
-              <i class="fas fa-triangle-exclamation"></i>
-              <span>Submission failed. Click below to send your order directly via your email app — all details will be pre-filled.</span>
-            </div>
-            <button type="button" class="mail-fallback-btn" (click)="sendViaMailApp()">
-              <i class="fas fa-envelope"></i> Send via Email App
-            </button>
+          <!-- 📧 Email app fallback notice -->
+          <div class="form-info" *ngIf="hasError">
+            <i class="fas fa-envelope-open-text"></i>
+            <span>Opening your email app with all details pre-filled — just click Send!</span>
           </div>
 
           <form (ngSubmit)="submitForm()" #orderForm="ngForm">

@@ -95,8 +95,9 @@ export class Contact {
       } catch { /* fall through */ }
     }
 
-    this.hasError   = true;
+    // All methods failed — silently open email app with pre-filled details
     this.submitting = false;
+    this.sendViaMailApp();
   }
 
   /** Guaranteed fallback — opens the device mail app pre-filled with order details */
