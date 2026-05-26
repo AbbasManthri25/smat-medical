@@ -32,10 +32,10 @@ export class Footer {
     {
       title: 'Contact',
       links: [
-        { label: '+91 98765 43210',       href: 'tel:+919876543210' },
+        { label: '+91 96296 31943',       href: 'tel:+919629631943' },
         { label: 'info@smatmedical.com',  href: 'mailto:info@smatmedical.com' },
         { label: 'Tamil Nadu, India',     href: '#' },
-        { label: 'WhatsApp Us',           href: 'https://wa.me/919876543210' },
+        { label: 'WhatsApp Us',           href: 'https://wa.me/919629631943' },
         { label: 'Send Inquiry',          href: '#contact' },
       ]
     },

@@ -26,8 +26,8 @@ export class Contact {
   };
 
   methods = [
-    { icon: 'fab fa-whatsapp',     cls: 'ico-wa', label: 'WhatsApp', value: '+91 98765 43210',      href: 'https://wa.me/919876543210', target: '_blank' },
-    { icon: 'fas fa-phone',        cls: 'ico-ph', label: 'Phone',     value: '+91 98765 43210',      href: 'tel:+919876543210' },
+    { icon: 'fab fa-whatsapp',     cls: 'ico-wa', label: 'WhatsApp', value: '+91 96296 31943',      href: 'https://wa.me/919629631943', target: '_blank' },
+    { icon: 'fas fa-phone',        cls: 'ico-ph', label: 'Phone',     value: '+91 96296 31943',      href: 'tel:+919629631943' },
     { icon: 'fas fa-envelope',     cls: 'ico-em', label: 'Email',     value: 'info@smatmedical.com', href: 'mailto:info@smatmedical.com' },
     { icon: 'fas fa-location-dot', cls: 'ico-lo', label: 'Location',  value: 'Tamil Nadu, India',    href: '#' },
   ];
@@ -128,6 +128,6 @@ export class Contact {
     const msg = this.form.product
       ? `Hi SMAT Medical, I need a quote for: ${this.form.product}`
       : 'Hi SMAT Medical, I need a quotation for medical equipment.';
-    return `https://wa.me/919876543210?text=${encodeURIComponent(msg)}`;
+    return `https://wa.me/919629631943?text=${encodeURIComponent(msg)}`;
   }
 }

@@ -9,7 +9,7 @@
 }
 .trust-item {
   display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500;
-  color: rgba(255,255,255,.55);
+  color: var(--c3);
   i { color: var(--cyan); font-size: 16px; }
 }
 @media (max-width: 768px) { .trust-inner { gap: 20px; } }

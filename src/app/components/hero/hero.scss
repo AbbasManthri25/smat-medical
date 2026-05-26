@@ -30,7 +30,7 @@
 }
 .hero-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-  max-width: 1200px; margin: 0 auto; padding: 60px 24px; position: relative; z-index: 1;
+  width: 100%; margin: 0 auto; padding: 60px 40px; position: relative; z-index: 1;
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -41,14 +41,14 @@
   animation: fadein .6s ease;
 }
 .hero-title {
-  font-size: clamp(36px,5vw,60px); font-weight: 700; line-height: 1.1; margin-bottom: 14px; color: #fff;
+  font-size: clamp(36px,5vw,60px); font-weight: 700; line-height: 1.1; margin-bottom: 14px; color: var(--c1);
   .grad-text {
     background: var(--gtext);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
 }
 .hero-cycle-wrap { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
-.hero-cycle-label { font-size: clamp(16px,2.5vw,22px); color: rgba(255,255,255,.6); }
+.hero-cycle-label { font-size: clamp(16px,2.5vw,22px); color: var(--c3); }
 .hero-cycle {
   font-size: clamp(16px,2.5vw,22px); font-weight: 600;
   color: var(--cyan2); min-width: 240px;
@@ -56,7 +56,7 @@
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-.hero-desc { font-size: 16px; color: rgba(255,255,255,.55); line-height: 1.85; margin-bottom: 36px; max-width: 520px; }
+.hero-desc { font-size: 16px; color: var(--c3); line-height: 1.85; margin-bottom: 36px; max-width: 520px; }
 .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 52px; }
 .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
 .hstat { text-align: center; }
@@ -64,8 +64,8 @@
   font-size: 34px; font-weight: 700; line-height: 1;
   background: var(--gtext); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.hstat-lbl { font-size: 11px; color: rgba(255,255,255,.45); font-weight: 500; text-transform: uppercase; letter-spacing: .8px; margin-top: 4px; }
-.hstat-div { width: 1px; height: 40px; background: rgba(255,255,255,.1); align-self: center; }
+.hstat-lbl { font-size: 11px; color: var(--c4); font-weight: 500; text-transform: uppercase; letter-spacing: .8px; margin-top: 4px; }
+.hstat-div { width: 1px; height: 40px; background: var(--div); align-self: center; }
 
 .hero-visual { display: flex; justify-content: center; align-items: center; }
 .hero-ecg-wrap {
@@ -84,13 +84,13 @@
 
 .hero-cards-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .hcard-mini {
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  background: var(--glass); border: 1px solid var(--div);
   border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 12px;
   transition: var(--tr);
   &:hover { border-color: rgba(6,182,212,.25); background: rgba(6,182,212,.06); }
   .hcm-ico { font-size: 22px; flex-shrink: 0; }
-  .hcm-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.8); }
-  .hcm-sub  { font-size: 10px; color: rgba(255,255,255,.4); }
+  .hcm-name { font-size: 12px; font-weight: 600; color: var(--c2); }
+  .hcm-sub  { font-size: 10px; color: var(--c4); }
 }
 
 @keyframes fadein { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }

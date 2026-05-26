@@ -5,8 +5,8 @@
   border: 1px solid var(--bdr2); border-radius: var(--rl); transition: var(--tr);
   backdrop-filter: blur(16px);
   &:hover { background: var(--glass2); border-color: var(--bdr); box-shadow: var(--sh); transform: translateY(-4px); }
-  h3 { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 8px; }
-  p  { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.65; }
+  h3 { font-size: 16px; font-weight: 700; color: var(--c1); margin-bottom: 8px; }
+  p  { font-size: 13px; color: var(--c4); line-height: 1.65; }
 }
 .wcard-ico {
   width: 52px; height: 52px;

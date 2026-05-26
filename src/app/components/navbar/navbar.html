@@ -18,6 +18,11 @@
     </ul>
 
     <div class="nav-right">
+      <!-- Theme toggle -->
+      <button class="theme-btn" (click)="theme.toggle()" [title]="theme.isDark() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+        <i [class]="theme.isDark() ? 'fas fa-sun' : 'fas fa-moon'"></i>
+      </button>
+
       <!-- Cart -->
       <a routerLink="/cart" class="nav-cart">
         <i class="fas fa-shopping-cart"></i>
@@ -35,7 +40,7 @@
       </ng-container>
 
       <!-- WhatsApp -->
-      <a href="https://wa.me/919876543210" target="_blank" class="nav-wa">
+      <a href="https://wa.me/919629631943" target="_blank" class="nav-wa">
         <i class="fab fa-whatsapp"></i> WhatsApp
       </a>
     </div>
@@ -57,7 +62,11 @@
   <a *ngIf="!auth.isLoggedIn()" routerLink="/login" (click)="closeMenu()"><i class="fas fa-sign-in-alt"></i> Sign In</a>
   <a *ngIf="auth.isLoggedIn()" routerLink="/account" (click)="closeMenu()"><i class="fas fa-user"></i> My Account</a>
   <a *ngIf="auth.isAdmin()" routerLink="/admin" (click)="closeMenu()"><i class="fas fa-gauge"></i> Admin</a>
-  <a href="https://wa.me/919876543210" target="_blank" class="mob-wa" (click)="closeMenu()">
+  <a href="https://wa.me/919629631943" target="_blank" class="mob-wa" (click)="closeMenu()">
     <i class="fab fa-whatsapp"></i> WhatsApp Us
   </a>
+  <button class="mob-theme-btn" (click)="theme.toggle()">
+    <i [class]="theme.isDark() ? 'fas fa-sun' : 'fas fa-moon'"></i>
+    {{ theme.isDark() ? 'Switch to Light Mode' : 'Switch to Dark Mode' }}
+  </button>
 </div>

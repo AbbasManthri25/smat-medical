@@ -4,8 +4,8 @@
   background: var(--glass); border: 1px solid var(--bdr2);
   border-radius: var(--rl); padding: 32px; transition: var(--tr); backdrop-filter: blur(16px);
   &:hover { border-color: var(--bdr); box-shadow: var(--sh); transform: translateY(-4px); }
-  h3 { font-size: 18px; font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 8px; }
-  p  { font-size: 14px; color: rgba(255,255,255,.5); line-height: 1.7; margin-bottom: 16px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--c1); margin-bottom: 8px; }
+  p  { font-size: 14px; color: var(--c4); line-height: 1.7; margin-bottom: 16px; }
 }
 .scard-ico {
   width: 58px; height: 58px;
@@ -16,7 +16,7 @@
 }
 .slist {
   list-style: none; display: flex; flex-direction: column; gap: 8px;
-  li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,.55); }
+  li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--c3); }
   li i { color: #4ADE80; font-size: 12px; }
 }
 
@@ -37,12 +37,12 @@
 }
 .amc .cbadge { background: rgba(6,182,212,.12); color: var(--cyan2); border: 1px solid rgba(6,182,212,.25); }
 .cmc .cbadge { background: rgba(6,182,212,.2); color: var(--cyan2); border: 1px solid rgba(6,182,212,.35); }
-.ccard h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: rgba(255,255,255,.9); }
-.ccard > p { font-size: 14px; margin-bottom: 22px; color: rgba(255,255,255,.55); }
+.ccard h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--c1); }
+.ccard > p { font-size: 14px; margin-bottom: 22px; color: var(--c3); }
 .cfeat {
   list-style: none; display: flex; flex-direction: column; gap: 10px;
-  li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,.65); }
-  li.no { color: rgba(255,255,255,.3); }
+  li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--c3); }
+  li.no { color: var(--c5); }
   li.no i { color: rgba(239,68,68,.6) !important; }
   i { color: #4ADE80; }
 }
@@ -54,7 +54,7 @@
   font-size: 14px; font-weight: 600; cursor: pointer;
   font-family: 'Space Grotesk', sans-serif; transition: var(--tr);
   &:hover { background: rgba(6,182,212,.18); transform: translateY(-2px); }
-  &.cmc-cta { border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: #fff; }
-  &.cmc-cta:hover { background: rgba(255,255,255,.16); }
+  &.cmc-cta { border-color: var(--cp); background: var(--div); color: #fff; }
+  &.cmc-cta:hover { background: var(--div); }
 }
 @media (max-width: 768px) { .contract-grid { grid-template-columns: 1fr; } }
