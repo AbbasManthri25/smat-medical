@@ -1,17 +1,41 @@
 .why { background: var(--bg); }
-.why-grid  { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 22px; }
-.wcard {
-  padding: 30px; background: var(--glass);
-  border: 1px solid var(--bdr2); border-radius: var(--rl); transition: var(--tr);
-  backdrop-filter: blur(16px);
-  &:hover { background: var(--glass2); border-color: var(--bdr); box-shadow: var(--sh); transform: translateY(-4px); }
-  h3 { font-size: 16px; font-weight: 700; color: var(--c1); margin-bottom: 8px; }
-  p  { font-size: 13px; color: var(--c4); line-height: 1.65; }
+
+.why-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
 }
+
+.wcard {
+  padding: 32px; background: var(--glass);
+  border: 1px solid var(--bdr2); border-radius: var(--rl);
+  transition: var(--tr); backdrop-filter: blur(16px);
+  position: relative; overflow: hidden;
+
+  &::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 1px; background: var(--grad);
+    transform: scaleX(0); transform-origin: left; transition: var(--tr);
+  }
+  &:hover {
+    background: var(--glass2); border-color: var(--bdr);
+    box-shadow: var(--sh); transform: translateY(-5px);
+    &::before { transform: scaleX(1); }
+  }
+  h3 { font-size: 16px; font-weight: 700; color: var(--c1); margin-bottom: 8px; }
+  p  { font-size: 13px; color: var(--c4); line-height: 1.7; }
+}
+
+.wcard-num {
+  font-size: 13px; font-weight: 800; letter-spacing: 1px;
+  background: var(--gtext);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 16px; opacity: 0.7;
+}
+
 .wcard-ico {
   width: 52px; height: 52px;
   background: rgba(6,182,212,.1); border: 1px solid rgba(6,182,212,.2);
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; color: var(--cyan2); margin-bottom: 16px;
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--cyan2); margin-bottom: 18px;
+  transition: var(--tr);
+  .wcard:hover & { background: rgba(6,182,212,.18); box-shadow: 0 0 18px rgba(6,182,212,.25); }
 }

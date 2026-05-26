@@ -1,16 +1,22 @@
-<section class="why section">
+<section class="why section" id="why">
   <div class="container">
-    <div class="tc fade-up" style="margin-bottom:44px">
-      <div class="badge"><i class="fas fa-trophy"></i> Why Choose Us</div>
-      <h2 class="section-title">Why SMAT Medical?</h2>
-      <p class="section-sub">Technical expertise combined with a wide product range and responsive, honest service.</p>
+
+    <div class="tc fade-up" style="margin-bottom:52px">
+      <div class="badge"><i class="fas fa-star"></i> Why Choose Us</div>
+      <h2 class="section-title">Why <span class="grad-text">SMAT Medical?</span></h2>
+      <p class="section-sub">Six pillars that set us apart from every other medical equipment supplier in Tamil Nadu.</p>
     </div>
+
     <div class="why-grid fade-up">
-      <div class="wcard" *ngFor="let c of cards">
-        <div class="wcard-ico"><i [class]="c.icon"></i></div>
+      <div class="wcard" *ngFor="let c of cards; let i = index">
+        <div class="wcard-num">{{ (i + 1).toString().padStart(2, '0') }}</div>
+        <div class="wcard-ico">
+          <i [class]="c.icon"></i>
+        </div>
         <h3>{{ c.title }}</h3>
         <p>{{ c.desc }}</p>
       </div>
     </div>
+
   </div>
 </section>

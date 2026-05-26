@@ -1,23 +1,47 @@
 <footer class="footer">
+  <!-- CTA band -->
+  <div class="footer-cta-band">
+    <div class="container">
+      <div class="footer-cta-inner">
+        <div>
+          <div class="footer-cta-title">Ready to equip your facility?</div>
+          <div class="footer-cta-sub">Get instant quotes via WhatsApp or send an inquiry — we respond within 24 hours.</div>
+        </div>
+        <div class="footer-cta-btns">
+          <a href="https://wa.me/919629631943?text=Hi%20SMAT%20Medical%2C%20I%20need%20a%20quote." target="_blank" class="btn-primary">
+            <i class="fab fa-whatsapp"></i> WhatsApp Us
+          </a>
+          <a href="#contact" class="btn-outline">Get Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main grid -->
   <div class="container">
     <div class="footer-grid">
-      <div>
+      <!-- Brand column -->
+      <div class="footer-brand">
         <div class="flogo">
-          <img src="smat-logo.svg" class="flogo-img" alt="SMAT Medical Logo">
+          <img src="assets/logo.svg" alt="SMAT Medical" class="flogo-img">
           <div>
-            <div class="flogo-name">SMAT Medical &amp; Dental Solutions</div>
-            <div class="flogo-tag">Complete Medical &amp; Dental Equipment Solutions</div>
+            <div class="flogo-name">SMAT Medical</div>
+            <div class="flogo-tag">Dental Solutions</div>
           </div>
         </div>
-        <p class="fdesc">A Biomedical Engineer-led startup supplying medical and dental equipment to hospitals, clinics, and diagnostic centers. From consumables to advanced imaging — we've got it covered.</p>
+        <p class="fdesc">
+          Trusted medical &amp; dental equipment supplier serving hospitals, clinics,
+          and diagnostic centres across Tamil Nadu. Built on biomedical expertise.
+        </p>
         <div class="fsocials">
-          <a href="#" class="fsoc"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="fsoc"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="fsoc"><i class="fab fa-linkedin-in"></i></a>
-          <a href="https://wa.me/919629631943" target="_blank" class="fsoc"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://facebook.com" target="_blank" class="fsoc" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com" target="_blank" class="fsoc" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="fsoc" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://wa.me/919629631943" target="_blank" class="fsoc fsoc-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
 
+      <!-- Link columns -->
       <div class="fcol" *ngFor="let col of columns">
         <h4>{{ col.title }}</h4>
         <ul class="flinks">
@@ -28,9 +52,10 @@
       </div>
     </div>
 
+    <!-- Bottom bar -->
     <div class="footer-bottom">
-      <p>&copy; 2025 SMAT Medical &amp; Dental Solutions. All rights reserved.</p>
-      <p class="footer-grad">Healthcare Excellence · Tamil Nadu</p>
+      <p>© 2026 SMAT Medical &amp; Dental Solutions. All rights reserved.</p>
+      <span class="footer-grad">Healthcare Excellence · Tamil Nadu</span>
     </div>
   </div>
 </footer>
